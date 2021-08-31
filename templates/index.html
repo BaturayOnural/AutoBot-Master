@@ -79,14 +79,25 @@
       <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
       <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
-
+      <script type="text/javascript">
+      $(document)
+        .ready(function(){
+          $('.demo .example .ui.accordion')
+      .accordion()
+          ;
+        })
+      ;
+      </script>
   </head>
   <body id="root">
       <div class="ui tablet computer only padded grid">
         <div class="ui inverted borderless top fixed fluid menu">
           <a class="header item"><i class="inverted big olive robot icon"></i>Auto Bot</a>
           <div class="right menu">
-            <a class="item">Dashboard</a> <a class="item">Settings</a>
+            <a class="item">
+              <img class="ui right spaced avatar image" src="/templates/static/ms.jpg">
+              M. Soydan
+            </a>
             <a class="item">Sign out</a>
           </div>
         </div>
@@ -118,8 +129,11 @@
           id="sidebar"
         >
           <div class="ui vertical borderless fluid text menu">
-            <a class="active item">Overview</a> <a class="item">Create Task</a>
-            <a class="item">Task Reports</a> <a class="item">Database</a>
+            <a class="active item">Overview <em data-emoji=":clipboard:" class="small"></em></a>
+            <a class="item">Create Task <em data-emoji=":crayon:" class="small"></em></a>
+            <a class="item">Task Reports <em data-emoji=":bar_chart:" class="small"></em></a>
+            <a class="item">Database <em data-emoji=":card_box:" class="small"></em></a>
+            <a class="item">Settings <em data-emoji=":tools:" class="small"></em></a>
           </div>
         </div>
         <div
@@ -128,7 +142,7 @@
         >
           <div class="ui padded grid">
             <div class="row">
-              <h1 class="ui huge dividing header">Dashboard</h1><br> <br>
+              <h1 class="ui huge dividing header">Statistics</h1><br> <br>
             </div>
             <div class="center aligned row">
               <div
@@ -185,131 +199,76 @@
               <h1 class="ui huge dividing header">Active Tasks</h1>
             </div>
             <div class="row">
-              <table class="ui single line striped selectable unstackable table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Header</th>
-                    <th>Header</th>
-                    <th>Header</th>
-                    <th>Header</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1,001</td>
-                    <td>Lorem</td>
-                    <td>ipsum</td>
-                    <td>dolor</td>
-                    <td>sit</td>
-                  </tr>
-                  <tr>
-                    <td>1,002</td>
-                    <td>amet</td>
-                    <td>consectetur</td>
-                    <td>adipiscing</td>
-                    <td>elit</td>
-                  </tr>
-                  <tr>
-                    <td>1,003</td>
-                    <td>Integer</td>
-                    <td>nec</td>
-                    <td>odio</td>
-                    <td>Praesent</td>
-                  </tr>
-                  <tr>
-                    <td>1,003</td>
-                    <td>libero</td>
-                    <td>Sed</td>
-                    <td>cursus</td>
-                    <td>ante</td>
-                  </tr>
-                  <tr>
-                    <td>1,004</td>
-                    <td>dapibus</td>
-                    <td>diam</td>
-                    <td>Sed</td>
-                    <td>nisi</td>
-                  </tr>
-                  <tr>
-                    <td>1,005</td>
-                    <td>Nulla</td>
-                    <td>quis</td>
-                    <td>sem</td>
-                    <td>at</td>
-                  </tr>
-                  <tr>
-                    <td>1,006</td>
-                    <td>nibh</td>
-                    <td>elementum</td>
-                    <td>imperdiet</td>
-                    <td>Duis</td>
-                  </tr>
-                  <tr>
-                    <td>1,007</td>
-                    <td>sagittis</td>
-                    <td>ipsum</td>
-                    <td>Praesent</td>
-                    <td>mauris</td>
-                  </tr>
-                  <tr>
-                    <td>1,008</td>
-                    <td>Fusce</td>
-                    <td>nec</td>
-                    <td>tellus</td>
-                    <td>sed</td>
-                  </tr>
-                  <tr>
-                    <td>1,009</td>
-                    <td>augue</td>
-                    <td>semper</td>
-                    <td>porta</td>
-                    <td>Mauris</td>
-                  </tr>
-                  <tr>
-                    <td>1,010</td>
-                    <td>massa</td>
-                    <td>Vestibulum</td>
-                    <td>lacinia</td>
-                    <td>arcu</td>
-                  </tr>
-                  <tr>
-                    <td>1,011</td>
-                    <td>eget</td>
-                    <td>nulla</td>
-                    <td>Class</td>
-                    <td>aptent</td>
-                  </tr>
-                  <tr>
-                    <td>1,012</td>
-                    <td>taciti</td>
-                    <td>sociosqu</td>
-                    <td>ad</td>
-                    <td>litora</td>
-                  </tr>
-                  <tr>
-                    <td>1,013</td>
-                    <td>torquent</td>
-                    <td>per</td>
-                    <td>conubia</td>
-                    <td>nostra</td>
-                  </tr>
-                  <tr>
-                    <td>1,014</td>
-                    <td>per</td>
-                    <td>inceptos</td>
-                    <td>himenaeos</td>
-                    <td>Curabitur</td>
-                  </tr>
-                  <tr>
-                    <td>1,015</td>
-                    <td>sodales</td>
-                    <td>ligula</td>
-                    <td>in</td>
-                    <td>libero</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="ui segment">
+                <div class="ui center aligned two column very relaxed grid">
+                  <div class="column">
+                    <div class="ui vertical accordion menu">
+                      <div class="item">
+                        <a class="active title">
+                    <i class="dropdown icon"></i>
+                  Task 73
+                </a><br>
+                        <div class="active content">
+                    <div class="ui form">
+                      <div class="grouped fields">
+                        <div class="field">
+                          <div class="ui grid">
+                            <label>Bot 1</label>
+                            <div class="ui indicating progress">
+                            <div class="bar"></div>
+
+                          </div>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="ui grid">
+                            <label>Bot 2</label>
+                            <div class="ui indicating progress">
+                            <div class="bar"></div>
+
+                          </div>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="ui grid">
+                            <label>Bot 3</label>
+                            <div class="ui indicating progress">
+                            <div class="bar"></div>
+
+                          </div>
+                          </div>
+                        </div>
+                        <div class="field">
+                          <div class="ui grid">
+                            <label>Bot 4</label>
+                            <div class="ui indicating progress">
+                            <div class="bar"></div>
+
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+
+
+                  </div>
+                  <div class="column">
+                    <p> Working on email registration</p>
+                    <p> Working on instagram account registration</p>
+                    <p> Working on assigned instagram tasks</p>
+                    <p> Total number of available bots</p>
+                  </div>
+                </div>
+                <div class="ui vertical divider">
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -321,6 +280,7 @@
           });
         });
       </script>
+
 
       <script>
       (function(i, s, o, g, r, a, m) {
