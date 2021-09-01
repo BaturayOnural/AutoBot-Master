@@ -11,25 +11,25 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Init db
+# Init Database
 db = SQLAlchemy(app)
 
-# Init marshmallow
+# Init Marshmallow
 ma = Marshmallow(app)
 
-# Email model
+# Email Model
 class Email(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email_adress = db.Column(db.String(100), unique=True)
+    email_address = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(30))
     day_age = db.Column(db.Integer, default=0)
 
-    def __init__(self, email_adress, password, day_age):
-            self.email_adress = email_adress
+    def __init__(self, email_address, password, day_age):
+            self.email_address = email_address
             self.password = password
             self.day_age = day_age
 
-# Name model
+# Name Model
 class Name(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(30), unique=True)
@@ -41,24 +41,26 @@ class Name(db.Model):
             self.last_name = last_name
             self.gender = gender
 
-# Bot model
+# Bot Model
 class Bot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30))
     password = db.Column(db.String(30))
     port = db.Column(db.String(10))
     proxy_ip = db.Column(db.String(30))
+    digital_ocean_ip = db.Column(db.String(30))
 
-    def __init__(self, username, password, port, proxy_ip):
+    def __init__(self, username, password, port, proxy_ip, digital_ocean_ip):
             self.username = username
             self.pasword = password
             self.port = port
             self.proxy_ip = proxy_ip
+            self.digital_ocean_ip = digital_ocean_ip
 
 # Email Schema
 class EmailSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'email_adress', 'pasword', 'day_age')
+        fields = ('id', 'email_address', 'password', 'day_age')
 
 # Name Schema
 class NameSchema(ma.Schema):
@@ -68,7 +70,17 @@ class NameSchema(ma.Schema):
 # Bot Schema
 class BotSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'username', 'password', 'port', 'proxy_ip')
+        fields = ('id', 'username', 'password', 'port', 'proxy_ip', 'digital_ocean_ip')
+
+# Init Schema
+email_schema = EmailSchema()
+emails_schema = EmailSchema(many=True)
+
+name_schema = NameSchema()
+names_schema = NameSchema(many=True)
+
+bot_schema = BotSchema()
+bots_schema = BotSchema(many=True)
 
 # Additional routes for favicon and profile picture
 @app.route('/templates/static/favicon.ico')
@@ -81,10 +93,10 @@ def msoydan():
     return send_from_directory(os.path.join(app.root_path, 'templates/static'),
                                'ms.jpg')
 
-# Casual routes
+# Casual Routes
 @app.route('/')
 def index():
-    return render_template("overview.html")
+    return render_template("ip_settings.html")
 
 @app.route('/')
 def get_emails():
