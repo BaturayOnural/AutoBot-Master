@@ -94,8 +94,24 @@ def msoydan():
                                'ms.jpg')
 
 # Casual Routes
-@app.route('/')
-def index():
+@app.route('/overview')
+def overview():
+    return render_template("overview.html")
+
+@app.route('/create_task')
+def create_task():
+    return render_template("create_task.html")
+
+@app.route('/task_reports')
+def task_reports():
+    return render_template("task_reports.html")
+
+@app.route('/database')
+def database():
+    return render_template("database.html")
+
+@app.route('/ip_settings')
+def ip_settings():
     return render_template("ip_settings.html")
 
 @app.route('/')
