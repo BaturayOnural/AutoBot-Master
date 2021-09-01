@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=no"
     />
-
+    <link rel="shortcut icon" href="/templates/static/favicon.ico">
     <title>Auto Bot</title>
     <style type="text/css">
         body {
@@ -80,7 +80,7 @@
       <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css">
       <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js"></script>
-
+      {% block head %}{% endblock %}
   </head>
   <body id="root">
       <div class="ui tablet computer only padded grid">
@@ -125,144 +125,14 @@
           id="sidebar"
         >
           <div class="ui vertical borderless fluid text menu">
-            <a class="active item">Overview <em data-emoji=":clipboard:" class="small"></em></a>
+            <a class="item">Overview <em data-emoji=":clipboard:" class="small"></em></a>
             <a class="item">Create Task <em data-emoji=":crayon:" class="small"></em></a>
             <a class="item">Task Reports <em data-emoji=":bar_chart:" class="small"></em></a>
             <a class="item">Database <em data-emoji=":card_box:" class="small"></em></a>
             <a class="item">Settings <em data-emoji=":tools:" class="small"></em></a>
           </div>
         </div>
-        <div
-          class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column"
-          id="content"
-        >
-          <div class="ui padded grid">
-            <div class="row">
-              <h1 class="ui huge dividing header">Statistics</h1><br> <br>
-            </div>
-            <div class="center aligned row">
-              <div
-                class="eight wide mobile four wide tablet four wide computer column"
-              >
-              <div class="ui statistic">
-                <div class="value">
-                  1050
-                </div>
-                <div class="label">
-                  <i class="red envelope outline icon"></i> Emails
-                </div>
-                </div>
-              </div>
-              <div
-                class="eight wide mobile four wide tablet four wide computer column"
-              >
-              <div class="ui statistic">
-                <div class="value">
-                  652
-                </div>
-                <div class="label">
-                  <i class="purple instagram icon"></i> Instagram Accounts
-                </div>
-                </div>
-              </div>
-              <div
-                class="eight wide mobile four wide tablet four wide computer column"
-              >
-              <div class="ui statistic">
-                <div class="value">
-                  72
-                </div>
-                <div class="label">
-                  <i class="blue tasks icon"></i> COMPLETED TASKS
-                </div>
-                </div>
-              </div>
-              <div
-                class="eight wide mobile four wide tablet four wide computer column"
-              >
-              <div class="ui statistic">
-                <div class="value">
-                  4
-                </div>
-                <div class="label">
-                  <i class="olive robot icon"></i> ACTIVE BOTS
-                </div>
-                </div>
-              </div>
-            </div>
-            <div class="ui hidden section divider"></div>
-            <div class="row">
-              <h1 class="ui huge dividing header">Active Tasks</h1>
-            </div>
-            <div class="row">
-              <div class="ui segment">
-                <div class="ui center aligned very relaxed grid" >
-                  <div class="column">
 
-                      <div class="item">
-                        <a class="active title">
-                          <div class="ui  left aligned segment">
-                      <i class="tasks icon"></i>
-                        Task 73
-                      <button class="ui tiny right floated icon button" onclick="stopTask()" style="margin-top: -5px;" ><i class="red power off icon"></i></button>
-
-                    </div>
-
-
-                </a>
-                        <div class="active content">
-                    <div class="ui form">
-                      <div class="grouped fields">
-                        <div class="field">
-                          <div>
-                            <i class="olive robot icon"></i> <label>Bot 1</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div>
-                            <i class="olive robot icon"></i> <label><label>Bot 2</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div>
-                            <i class="olive robot icon"></i> <label>Bot 3</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div>
-                            <i class="olive robot icon"></i> <label>Bot 4</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
-                          </div>
-                        </div>
-                          <p> 200 - Target <i class="flag checkered icon"></i></p>
-                      </div>
-                    </div>
-                        </div>
-                      </div>
-                  </div>
-
-                </div><br>
-                <div class="ui center aligned grid">
-                  <p> 12 - Attempts <i class="blue sync alternate icon"></i></p>
-                  <p> 8 - Success <i class="green check icon"></i></p>
-                  <div class="ui tiny blue active primary inline loader"></div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
 
@@ -310,7 +180,7 @@
       </script>
 
 <!--HIDDEN DIV AND CLICK HANDLES FOR JS END-->
-
+{% block body %}{% endblock %}
     </body>
 
 </html>
