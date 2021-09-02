@@ -49,13 +49,15 @@ class Bot(db.Model):
     port = db.Column(db.String(10))
     proxy_ip = db.Column(db.String(30))
     digital_ocean_ip = db.Column(db.String(30))
+    status = db.Column(db.String(10))
 
-    def __init__(self, username, password, port, proxy_ip, digital_ocean_ip):
+    def __init__(self, username, password, port, proxy_ip, digital_ocean_ip, status):
             self.username = username
             self.pasword = password
             self.port = port
             self.proxy_ip = proxy_ip
             self.digital_ocean_ip = digital_ocean_ip
+            self.status = status
 
 # Email Schema
 class EmailSchema(ma.Schema):
@@ -93,7 +95,7 @@ def msoydan():
     return send_from_directory(os.path.join(app.root_path, 'templates/static'),
                                'ms.jpg')
 
-# Casual Routes
+# Casual routes for pages
 @app.route('/overview')
 def overview():
     return render_template("overview.html")
@@ -110,9 +112,9 @@ def task_reports():
 def database():
     return render_template("database.html")
 
-@app.route('/ip_settings')
-def ip_settings():
-    return render_template("ip_settings.html")
+@app.route('/bot_settings')
+def bot_settings():
+    return render_template("bot_settings.html")
 
 @app.route('/')
 def get_emails():

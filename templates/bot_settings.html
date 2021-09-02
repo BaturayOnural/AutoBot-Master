@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+{% endblock %}
+{% block body %}
+<div class="ui padded grid">
+  <div
+    class="two wide tablet only two wide computer only column"
+    id="sidebar"
+  >
+    <div class="ui massive vertical borderless fluid text menu">
+      <a href="/overview" class="item">Overview <em data-emoji=":clipboard:" class="small"></em></a>
+      <a href="/create_task" class="item">Create Task <em data-emoji=":crayon:" class="small"></em></a>
+      <a href="/task_reports" class="item">Task Reports <em data-emoji=":bar_chart:" class="small"></em></a>
+      <a href="/database" class="item">Database <em data-emoji=":card_box:" class="small"></em></a>
+      <a href="/bot_settings" class="active item">Bot Settings <em data-emoji=":tools:" class="small"></em></a>
+    </div>
+  </div>
+  <div
+    class="sixteen wide mobile fourteen wide tablet fourteen wide computer right floated column"
+    id="content"
+  >
+    <div class="ui center aligned padded grid">
+      <div class="row">
+        <h1 class="ui huge dividing header">Resources</h1><br> <br>
+      </div>
+      <div class="center aligned row">
+        <div
+          class="eight wide mobile seven wide tablet seven wide computer center floated column"
+        >
+        <div class="ui teal raised segment" data-tooltip="Number of rotating proxies in your webshare account">
+        <div class="ui statistic">
+
+          <div class="value">
+            5
+          </div>
+          <div class="label"><br>
+            <i class="teal project diagram icon"> </i>AVAILABLE PROXIES
+          </div>
+          </div>
+          </div>
+        </div>
+
+
+        <div
+          class="eight wide mobile seven wide tablet seven wide computer center  floated column"
+        >
+        <div class="ui olive raised segment" data-tooltip="Number of active droplets in your digital ocean account">
+        <div class="ui statistic">
+          <div class="value">
+            4
+          </div>
+          <div class="label"><br>
+            <i class="olive robot icon" ></i> ACTIVE BOTS
+          </div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui hidden section divider"></div>
+      <div class="row">
+        <h1 class="ui huge dividing header">Bot Static IP List</h1>
+      </div>
+      <div class="row">
+        <div class="ui raised segment">
+
+
+          <table class="ui very basic collapsing celled table">
+            <thead>
+              <tr>
+                <th>Bot Name</th>
+                <th>Status</th>
+                <th>Static IP</th>
+            </tr>
+          </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <h4 class="ui image header">
+                      <i class="olive robot icon" ></i>
+                    <div class="content">
+                      AutoBot-1
+
+                  </div>
+                </h4></td>
+                <td>
+                  Occupied
+                </td>
+                <td>
+                  22
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h4 class="ui image header">
+                      <i class="olive robot icon" ></i>
+                    <div class="content">
+                      AutoBot-2
+                  </div>
+                </h4></td>
+                <td>
+                  Occupied
+                </td>
+                <td>
+                  22
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h4 class="ui image header">
+                      <i class="olive robot icon" ></i>
+                    <div class="content">
+                      AutoBot-3
+                  </div>
+                </h4></td>
+                <td>
+                  Occupied
+                </td>
+                <td>
+                  22
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h4 class="ui image header">
+                      <i class="olive robot icon" ></i>
+                    <div class="content">
+                    AutoBot-4
+                  </div>
+                </h4></td>
+                <td>
+                  Idle
+                </td>
+                <td>
+                  22
+                </td>
+              </tr>
+            </tbody>
+            <tfoot class="full-width">
+    <tr>
+
+      <th colspan="4">
+        <div class="ui right floated small primary labeled icon button">
+          <i class="robot icon"></i> Add Bot
+        </div>
+        <div class="ui red small button">
+          Delete Bot
+        </div>
+      </th>
+    </tr>
+  </tfoot>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
