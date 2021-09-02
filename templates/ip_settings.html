@@ -7,7 +7,7 @@
 {% block body %}
 <div class="ui padded grid">
   <div
-    class="three wide tablet only three wide computer only column"
+    class="two wide tablet only two wide computer only column"
     id="sidebar"
   >
     <div class="ui massive vertical borderless fluid text menu">
@@ -19,43 +19,49 @@
     </div>
   </div>
   <div
-    class="sixteen wide mobile thirteen wide tablet thirteen wide computer right floated column"
+    class="sixteen wide mobile fourteen wide tablet fourteen wide computer right floated column"
     id="content"
   >
     <div class="ui center aligned padded grid">
       <div class="row">
-        <h1 class="ui huge dividing header">Statistics</h1><br> <br>
+        <h1 class="ui huge dividing header">Resources</h1><br> <br>
       </div>
       <div class="center aligned row">
-
         <div
-          class="eight wide mobile four wide tablet four wide computer column"
+          class="eight wide mobile seven wide tablet seven wide computer center floated column"
         >
+        <div class="ui teal raised segment" data-tooltip="Number of rotating proxies in your webshare account">
         <div class="ui statistic">
+
           <div class="value">
             5
           </div>
-          <div class="label">
-            <i class="teal project diagram icon"></i> AVAILABLE PROXIES
+          <div class="label"><br>
+            <i class="teal project diagram icon"> </i>AVAILABLE PROXIES
+          </div>
           </div>
           </div>
         </div>
+
+
         <div
-          class="eight wide mobile four wide tablet four wide computer column"
+          class="eight wide mobile seven wide tablet seven wide computer center  floated column"
         >
+        <div class="ui olive raised segment" data-tooltip="Number of active droplets in your digital ocean account">
         <div class="ui statistic">
           <div class="value">
             4
           </div>
-          <div class="label">
-            <i class="olive robot icon"></i> ACTIVE BOTS
+          <div class="label"><br>
+            <i class="olive robot icon" ></i> ACTIVE BOTS
+          </div>
           </div>
           </div>
         </div>
       </div>
       <div class="ui hidden section divider"></div>
       <div class="row">
-        <h1 class="ui huge dividing header">Active Tasks</h1>
+        <h1 class="ui huge dividing header">Bot Static IP List</h1>
       </div>
       <div class="row">
         <div class="ui segment">
@@ -113,6 +119,8 @@
               </div>
                   </div>
                 </div>
+
+
             </div>
 
           </div><br>
@@ -127,6 +135,4 @@
     </div>
   </div>
 </div>
-
-
 {% endblock %}
