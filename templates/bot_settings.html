@@ -50,7 +50,7 @@
         <div class="ui olive raised segment" data-tooltip="Number of active droplets in your digital ocean account">
         <div class="ui statistic">
           <div class="value">
-            4
+          {{num_bots}}
           </div>
           <div class="label"><br>
             <i class="olive robot icon" ></i> ACTIVE BOTS
@@ -69,6 +69,8 @@
 
           <table class="ui very basic collapsing celled table">
             <thead>
+
+
               <tr>
                 <th>Bot Name</th>
                 <th>Status</th>
@@ -76,67 +78,27 @@
             </tr>
           </thead>
             <tbody>
+                            {%for i in bots%}
               <tr>
                 <td>
                   <h4 class="ui image header">
                       <i class="olive robot icon" ></i>
                     <div class="content">
-                      AutoBot-1
+                      AutoBot-{{i.id}}
 
                   </div>
                 </h4></td>
                 <td>
-                  Occupied
+                  {{i.status}}
                 </td>
                 <td>
-                  22
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h4 class="ui image header">
-                      <i class="olive robot icon" ></i>
-                    <div class="content">
-                      AutoBot-2
-                  </div>
-                </h4></td>
-                <td>
-                  Occupied
-                </td>
-                <td>
-                  22
+                  {{i.digital_ocean_ip}}
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <h4 class="ui image header">
-                      <i class="olive robot icon" ></i>
-                    <div class="content">
-                      AutoBot-3
-                  </div>
-                </h4></td>
-                <td>
-                  Occupied
-                </td>
-                <td>
-                  22
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h4 class="ui image header">
-                      <i class="olive robot icon" ></i>
-                    <div class="content">
-                    AutoBot-4
-                  </div>
-                </h4></td>
-                <td>
-                  Idle
-                </td>
-                <td>
-                  22
-                </td>
-              </tr>
+              {%endfor%}
+
+
+
             </tbody>
             <tfoot class="full-width">
     <tr>
@@ -172,12 +134,12 @@
 
 <div class="ui small modal">
 <div class="header">Please type in the name of the bot you want to terminate (ex. AutoBot-1)</div>
-<form class="ui padded form">
+<form method="POST" class="ui padded form">
   <div class="field"> <br>
     <input type="text" name="bot_name" placeholder="Bot Name">
   </div>
 
-  <button class="ui right floated red button" type="submit">Delete</button>
+  <button formaction="/delete_bot" class="ui right floated red button" type="submit">Delete</button>
 </form>
 </div>
 

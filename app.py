@@ -116,9 +116,10 @@ def database():
 
 @app.route('/bot_settings')
 def bot_settings():
-    return render_template("bot_settings.html")
+    bots = Bot.query.all()
+    return render_template("bot_settings.html", bots=bots, num_bots=len(bots))
 
-# Routes for db
+# Routes for db model creation/update/delete
 @app.route('/add_bot', methods=['POST'])
 def add_bot():
         username = ""
@@ -132,8 +133,19 @@ def add_bot():
 
         db.session.add(new_bot)
         db.session.commit()
-        bananas = 10
-        return render_template("bot_settings.html",bananas=bananas)
+
+        return bot_settings()
+
+@app.route('/delete_bot', methods=['POST'])
+def delete_bot():
+        bot_name = request.form['bot_name']
+        bot_id = bot_name.split("-")[1]
+        bot_to_delete = Bot.query.get(int(bot_id))
+
+        db.session.delete(bot_to_delete)
+        db.session.commit()
+
+        return bot_settings()
 
 # Run server from terminal
 if __name__ ==  "__main__":
