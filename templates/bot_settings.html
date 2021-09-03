@@ -158,4 +158,65 @@
     </div>
   </div>
 </div>
+
+<div class="ui tiny modal">
+<div class="header">Please type in the static IP of the new bot</div>
+<form method="POST" class="ui padded form">
+  <div class="field"> <br>
+    <input type="text" name="digital_ocean_ip" placeholder="Static IP">
+  </div>
+
+  <button formaction="/add_bot" class="ui right floated green button" type="submit">Add Bot</button>
+</form>
+</div>
+
+<div class="ui small modal">
+<div class="header">Please type in the name of the bot you want to terminate (ex. AutoBot-1)</div>
+<form class="ui padded form">
+  <div class="field"> <br>
+    <input type="text" name="bot_name" placeholder="Bot Name">
+  </div>
+
+  <button class="ui right floated red button" type="submit">Delete</button>
+</form>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    $(".ui.toggle.button").click(function() {
+      $(".mobile.only.grid .ui.vertical.menu").toggle(100);
+    });
+  });
+
+</script>
+<script>
+$(document).ready(function()  {
+  $('.ui.right.floated.green.button').click(function(){
+    $('body')
+      .toast({
+        title: 'Added a new bot!',
+        message: 'The new bot will be displayed shortly',
+        showProgress: 'bottom',
+        classProgress: 'red'
+      })
+      ;
+  });
+});
+</script>
+<script>
+$(document).ready(function()  {
+  $('.ui.icon.button').click(function(){
+    $('.ui.tiny.modal').modal({detachable:false}).modal('show');
+  });
+});
+</script>
+<script>
+
+  $(document).ready(function()  {
+    $('.ui.red.button').click(function(){
+      $('.ui.small.modal').modal({detachable:false}).modal('show');
+    });
+  });
+</script>
 {% endblock %}

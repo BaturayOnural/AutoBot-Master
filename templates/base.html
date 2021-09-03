@@ -124,46 +124,7 @@
 
       <!--HIDDEN DIV AND CLICK HANDLES FOR JS BEGIN-->
 
-      <div class="ui tiny modal">
-  <div class="header">Are you sure to stop the active task?</div>
-  <div class="content">
-    When you click "Approve" all the subtasks that bots are occupied with will be terminated.
-  </div>
-  <div class="actions">
-    <div class="ui olive approve button">Approve</div>
-    <div class="ui red cancel button">Cancel</div>
-  </div>
-</div>
-      <script>
-        $(document).ready(function() {
-          $(".ui.toggle.button").click(function() {
-            $(".mobile.only.grid .ui.vertical.menu").toggle(100);
-          });
-        });
 
-      </script>
-      <script>
-      $(document).ready(function()  {
-        $('.ui.approve.button').click(function(){
-          $('body')
-            .toast({
-              title: 'Task Stopped!',
-              message: 'The task will be terminating shortly',
-              showProgress: 'bottom',
-              classProgress: 'red'
-            })
-            ;
-        });
-      });
-      </script>
-      <script>
-      $(document).ready(function()  {
-        $('.ui.icon.button').click(function(){
-          $('.ui.modal').modal({detachable:false}).modal('show');
-        });
-      });
-
-      </script>
 
 <!--HIDDEN DIV AND CLICK HANDLES FOR JS END-->
 {% block body %}{% endblock %}

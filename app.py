@@ -1,6 +1,7 @@
-from flask import Flask, render_template, send_from_directory, jsonify
+from flask import Flask, render_template, send_from_directory, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask import request
 import os
 
 # Init app
@@ -44,6 +45,7 @@ class Name(db.Model):
 # Bot Model
 class Bot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.String(5))
     username = db.Column(db.String(30))
     password = db.Column(db.String(30))
     port = db.Column(db.String(10))
@@ -72,7 +74,7 @@ class NameSchema(ma.Schema):
 # Bot Schema
 class BotSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'username', 'password', 'port', 'proxy_ip', 'digital_ocean_ip')
+        fields = ('id', 'username', 'password', 'port', 'proxy_ip', 'digital_ocean_ip', 'status')
 
 # Init Schema
 email_schema = EmailSchema()
@@ -116,9 +118,22 @@ def database():
 def bot_settings():
     return render_template("bot_settings.html")
 
-@app.route('/')
-def get_emails():
-    return jsonify({'msg':"message"})
+# Routes for db
+@app.route('/add_bot', methods=['POST'])
+def add_bot():
+        username = ""
+        password = ""
+        port = ""
+        proxy_ip = ""
+        digital_ocean_ip = request.form['digital_ocean_ip']
+        status = "Idle"
+
+        new_bot = Bot(username, password, port, proxy_ip, digital_ocean_ip, status)
+
+        db.session.add(new_bot)
+        db.session.commit()
+        bananas = 10
+        return render_template("bot_settings.html",bananas=bananas)
 
 # Run server from terminal
 if __name__ ==  "__main__":
