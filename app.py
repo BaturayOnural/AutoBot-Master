@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask import request
+from random import randrange
 import requests
 import os
 
@@ -90,7 +91,7 @@ names_schema = NameSchema(many=True)
 bot_schema = BotSchema()
 bots_schema = BotSchema(many=True)
 
-# Additional routes for favicon and profile picture
+# Additional routes for favicon, profile picture, login background
 @app.route('/templates/static/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'templates/static'),
@@ -100,6 +101,11 @@ def favicon():
 def msoydan():
     return send_from_directory(os.path.join(app.root_path, 'templates/static'),
                                'ms.jpg')
+
+@app.route('/templates/static/login_background.jpg')
+def login_background():
+    return send_from_directory(os.path.join(app.root_path, 'templates/static'),
+                               'login_background.jpg')
 
 # Casual routes for pages
 @app.route('/overview')

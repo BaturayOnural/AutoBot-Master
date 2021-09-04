@@ -24,6 +24,13 @@
     <style type="text/css">
       body {
         background-color: #eee;
+        background-image: url("/templates/static/login_background.jpg");
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
         -webkit-font-smoothing: antialiased;
         -moz-font-smoothing: grayscale;
       }
@@ -40,10 +47,10 @@
   </head>
 
   <body id="root">
-    <div class="ui center aligned grid">
-      <div class="ui center aligned container">
+    <div class="ui large center aligned grid">
+      <div class="ui huge center aligned container">
 
-        <h1 class="ui huge header">Please sign in</h1>
+        <h1 class="ui teal massive header">Please sign in</h1>
         {% if error_while_logging == '1' %}
         <div class="ui error message">
           <div class="header">False Credentials</div>
@@ -52,16 +59,16 @@
         {% endif %}
         <form method="POST" class="ui large form">
           <div class="field">
-            <div class="ui input">
+            <div class="ui input"><br>
               <input name="email" placeholder="Email address" type="text" />
             </div>
           </div>
           <div class="field">
-            <div class="ui input">
+            <div class="ui input"><br>
               <input name="password" placeholder="Password" type="password" />
             </div>
           </div>
-          <button formaction="/login" class="ui fluid large primary button" type="submit">
+          <button formaction="/login" class="ui fluid teal large button" type="submit">
             Sign in
           </button>
 
