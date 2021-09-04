@@ -2,7 +2,11 @@ from flask import Flask, render_template, send_from_directory, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask import request
+import requests
 import os
+
+# Api keys
+webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
 
 # Init app
 app = Flask(__name__)
@@ -117,7 +121,29 @@ def database():
 @app.route('/bot_settings')
 def bot_settings():
     bots = Bot.query.all()
-    return render_template("bot_settings.html", bots=bots, num_bots=len(bots))
+    response = requests.get("https://proxy.webshare.io/api/subscription/", headers={"Authorization": webshare_api_key})
+    response = response.json()
+    proxy_count = response['proxy_count']
+
+    # use when creating task for proxy information
+    response = requests.get("https://proxy.webshare.io/api/proxy/list/", headers={"Authorization": webshare_api_key})
+    response = response.json()
+    usernames = []
+    passwords = []
+    proxy_addresses = []
+    ports = []
+    for elem in response['results']:
+        username = elem['username']
+        password = elem['password']
+        proxy_address = elem['proxy_address']
+        port = elem['ports']['http']
+
+        usernames.append(username)
+        passwords.append(password)
+        proxy_addresses.append(proxy_address)
+        ports.append(port)
+
+    return render_template("bot_settings.html", bots=bots, num_bots=len(bots), proxy_count=proxy_count)
 
 # Routes for db model creation/update/delete
 @app.route('/add_bot', methods=['POST'])
