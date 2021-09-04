@@ -118,6 +118,21 @@ def task_reports():
 def database():
     return render_template("database.html")
 
+@app.route('/login', methods = ["POST","GET"])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+
+        if email != "msoydan@autobot.com" and password != "msoydan123*":
+            error_while_logging = '1'
+            print("false login")
+            return render_template("login.html", error_while_logging=error_while_logging)
+        else:
+            return overview()
+    else:
+        return render_template("login.html")
+
 @app.route('/bot_settings')
 def bot_settings():
     bots = Bot.query.all()

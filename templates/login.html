@@ -44,7 +44,13 @@
       <div class="ui center aligned container">
 
         <h1 class="ui huge header">Please sign in</h1>
-        <form class="ui large form">
+        {% if error_while_logging == '1' %}
+        <div class="ui error message">
+          <div class="header">False Credentials</div>
+          <p>Wrong e-mail address or password.</p>
+        </div>
+        {% endif %}
+        <form method="POST" class="ui large form">
           <div class="field">
             <div class="ui input">
               <input name="email" placeholder="Email address" type="text" />
@@ -55,9 +61,10 @@
               <input name="password" placeholder="Password" type="password" />
             </div>
           </div>
-          <button class="ui fluid large primary button" type="submit">
+          <button formaction="/login" class="ui fluid large primary button" type="submit">
             Sign in
           </button>
+
         </form>
       </div>
     </div>
@@ -102,6 +109,15 @@
       });
     </script>
 
-
+    <div class="ui tiny modal">
+<div class="header">Are you sure to stop the active task?</div>
+<div class="content">
+  When you click "Approve" all the subtasks that bots are occupied with will be terminated.
+</div>
+<div class="actions">
+  <div class="ui olive approve button">Approve</div>
+  <div class="ui red cancel button">Cancel</div>
+</div>
+</div>
   </body>
 </html>
