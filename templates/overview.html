@@ -226,33 +226,33 @@
                         <div class="field">
                           <div>
                             <i class="olive robot icon"></i> <label>Bot 1</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
+                            <div class="ui indicating progress" id="bot1"> 
+                                <div class="bar"></div>
+                                </div>
                           </div>
                         </div>
                         <div class="field">
                           <div>
                             <i class="olive robot icon"></i> <label><label>Bot 2</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
+                            <div class="ui indicating progress" id="bot2">
+                                <div class="bar"> </div>
+                                </div>
                           </div>
                         </div>
                         <div class="field">
                           <div>
                             <i class="olive robot icon"></i> <label>Bot 3</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
+                            <div class="ui indicating progress" id="bot3">
+                                <div class="bar"></div>
+                                </div>
                           </div>
                         </div>
                         <div class="field">
                           <div>
                             <i class="olive robot icon"></i> <label>Bot 4</label>
-                            <div class="ui indicating progress">
-                            <div class="bar"></div>
-                          </div>
+                            <div class="ui indicating progress" id="bot4">
+                                <div class="bar"></div>
+                                </div>
                           </div>
                         </div>
                           <p> 200 - Target <i class="flag checkered icon"></i></p>
@@ -316,6 +316,15 @@
         });
       });
 
+      </script>
+      <script>
+      function updateBars(){
+        $('#bot2')
+          .progress('increment', 10)
+        ;
+        setTimeout(updateBars, 5000)
+      }
+      updateBars();
       </script>
 
 <!--HIDDEN DIV AND CLICK HANDLES FOR JS END-->

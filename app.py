@@ -147,6 +147,9 @@ def bot_settings():
     proxy_count = response['proxy_count']
 
     # use when creating task for proxy information
+    response_refresh = requests.get("https://proxy.webshare.io/api/proxy/replacement/info/", headers={"Authorization": webshare_api_key})
+    response_refresh = response_refresh.json()
+    print(response_refresh['automatic_refresh_next_at'])
     response = requests.get("https://proxy.webshare.io/api/proxy/list/", headers={"Authorization": webshare_api_key})
     response = response.json()
     usernames = []
