@@ -66,6 +66,26 @@ class Bot(db.Model):
             self.digital_ocean_ip = digital_ocean_ip
             self.status = status
 
+# Task Model
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    instaId = db.Column(db.String(30))
+    targetInstaId = db.Column(db.String(30))
+    status = db.Column(db.String(30))
+    target = db.Column(db.String(30))
+    attempts = db.Column(db.String(30))
+    type = db.Column(db.String(30))
+    bots = db.Column(db.String(30))
+
+    def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots):
+            self.instaId = instaId
+            self.targetInstaId = targetInstaId
+            self.status = status
+            self.target = target
+            self.attempts = attempts
+            self.type = type
+            self.bots = bots
+
 # Email Schema
 class EmailSchema(ma.Schema):
     class Meta:
@@ -81,6 +101,11 @@ class BotSchema(ma.Schema):
     class Meta:
         fields = ('id', 'username', 'password', 'port', 'proxy_ip', 'digital_ocean_ip', 'status')
 
+# Task Schema
+class TaskSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'instaId', 'targetInstaId', 'status', 'target', 'attempts', 'type', 'bots')
+
 # Init Schema
 email_schema = EmailSchema()
 emails_schema = EmailSchema(many=True)
@@ -90,6 +115,9 @@ names_schema = NameSchema(many=True)
 
 bot_schema = BotSchema()
 bots_schema = BotSchema(many=True)
+
+task_schema = TaskSchema()
+tasks_schema = TaskSchema(many=True)
 
 # Additional routes for favicon, profile picture, login background
 @app.route('/templates/static/favicon.ico')
