@@ -86,6 +86,26 @@ class Task(db.Model):
             self.type = type
             self.bots = bots
 
+# Task Model
+class Instagram(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    instaId = db.Column(db.String(30))
+    targetInstaId = db.Column(db.String(30))
+    status = db.Column(db.String(30))
+    target = db.Column(db.String(30))
+    attempts = db.Column(db.String(30))
+    type = db.Column(db.String(30))
+    bots = db.Column(db.String(30))
+
+    def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots):
+            self.instaId = instaId
+            self.targetInstaId = targetInstaId
+            self.status = status
+            self.target = target
+            self.attempts = attempts
+            self.type = type
+            self.bots = bots
+
 # Email Schema
 class EmailSchema(ma.Schema):
     class Meta:
