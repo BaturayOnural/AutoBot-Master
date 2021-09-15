@@ -319,10 +319,22 @@
       </script>
       <script>
       function updateBars(){
-        $('#bot2')
-          .progress('increment', 10)
-        ;
-        setTimeout(updateBars, 5000)
+
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+        xmlHttp.open("GET", "http://64.225.2.13:5000/get_status", true); // true for asynchronous
+        xmlHttp.send(null);
+
+        status = xmlHttp.responseText
+        if(status == "1"){
+          $('#bot2').progress({percent: 22});
+        }
+
+
+        setTimeout(updateBars, 5000);
       }
       updateBars();
       </script>

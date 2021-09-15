@@ -2,6 +2,7 @@ from flask import Flask, render_template, send_from_directory, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask import request
+from flask_cors import CORS
 from random import randrange
 import requests
 import os
@@ -12,6 +13,7 @@ webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
 # Init app
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
+CORS(app)
 
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
