@@ -83,11 +83,11 @@
 </div>
 
 <script>
-
+  let bots_available = {{ bots_available }}
   $('.ui.slider')
     .slider({
-      min: 0,
-      max: 8,
+      min: 1,
+      max: bots_available,
       start: 0,
       step: 1
     })

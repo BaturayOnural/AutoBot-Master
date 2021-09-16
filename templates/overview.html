@@ -191,7 +191,7 @@
               <div class="ui olive raised  segment">
               <div class="ui statistic">
                 <div class="value">
-                  4
+                  {{ num_bots }}
                 </div>
                 <div class="label">
                   <i class="olive robot icon"></i> ACTIVE BOTS
@@ -205,6 +205,7 @@
               <h1 class="ui huge dividing header">Active Tasks</h1>
             </div>
             <div class="row">
+              {%for task in tasks%}
               <div class="ui segment">
                 <div class="ui center aligned very relaxed grid" >
                   <div class="column">
@@ -213,7 +214,7 @@
                         <a class="active title">
                           <div class="ui  left aligned segment">
                       <i class="tasks icon"></i>
-                        Task 73
+                        Task {{ task.id }}
                       <button class="ui tiny right floated icon button" onclick="stopTask()" style="margin-top: -5px;" ><i class="red power off icon"></i></button>
 
                     </div>
@@ -223,39 +224,26 @@
                         <div class="active content">
                     <div class="ui form">
                       <div class="grouped fields">
+
+                        {%for bot in task.bots_array%}
+
                         <div class="field">
                           <div>
-                            <i class="olive robot icon"></i> <label>Bot 1</label>
-                            <div class="ui indicating progress" id="bot1">
+                            <i class="olive robot icon"></i> <label>Bot {{ bot }}</label>
+                            <div class="ui indicating progress" id="bot{{ bot }}">
                                 <div class="bar"></div>
                                 </div>
                           </div>
                         </div>
-                        <div class="field">
-                          <div>
-                            <i class="olive robot icon"></i> <label><label>Bot 2</label>
-                            <div class="ui indicating progress" id="bot2">
-                                <div class="bar"> </div>
-                                </div>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div>
-                            <i class="olive robot icon"></i> <label>Bot 3</label>
-                            <div class="ui indicating progress" id="bot3">
-                                <div class="bar"></div>
-                                </div>
-                          </div>
-                        </div>
-                        <div class="field">
-                          <div>
-                            <i class="olive robot icon"></i> <label>Bot 4</label>
-                            <div class="ui indicating progress" id="bot4">
-                                <div class="bar"></div>
-                                </div>
-                          </div>
-                        </div>
-                          <p> 200 - Target <i class="flag checkered icon"></i></p>
+
+                        {%endfor%}
+
+
+
+
+
+
+                          <p> {{ task.target }} - Target <i class="flag checkered icon"></i></p>
                       </div>
                     </div>
                         </div>
@@ -264,12 +252,14 @@
 
                 </div><br>
                 <div class="ui center aligned grid">
-                  <p> 12 - Attempts <i class="blue sync alternate icon"></i></p>
-                  <p> 8 - Success <i class="green check icon"></i></p>
+                  <p> {{ task.attempts }} - Attempts <i class="blue sync alternate icon"></i></p>
+                  <p> {{ task.success }} - Success <i class="green check icon"></i></p>
                   <div class="ui tiny blue active primary inline loader"></div>
 
                 </div>
               </div>
+              {%endfor%}
+
             </div>
           </div>
         </div>
@@ -318,29 +308,43 @@
 
       </script>
       <script>
-      function updateBars(){
+      var bot_ids = {{ bot_ids }}
+      var bot_ips = {{ bot_ips|tojson }}
+      var bot_amount = bot_ids.length;
+
+      function updateBarsInner(bot_id, bot_ip){
 
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "http://64.225.2.13:5000/get_status", false ); // false for synchronous request
+        var ip = bot_ip;
+        var url = "/get_status"
+        xmlHttp.open( "GET", ip+":5000"+url, false ); // false for synchronous request
         xmlHttp.send( null );
-
         status = xmlHttp.responseText
+
+        var bot_name = "bot"
+        bot_name += bot_id
         if(status == "0"){
-          $('#bot2').progress({percent: 0});
+          $(bot_name).progress({percent: 0});
         }
         else if(status == "1"){
-          $('#bot2').progress({percent: 22});
+          $(bot_name).progress({percent: 22});
         }
         else if(status == "2"){
-          $('#bot2').progress({percent: 66});
+          $(bot_name).progress({percent: 66});
         }
         else if(status == "3"){
-          $('#bot2').progress({percent: 100});
+          $(bot_name).progress({percent: 100});
         }
 
-
-        setTimeout(updateBars, 5000);
       }
+      function updateBars(){
+        for (var i = 0; i < bot_amount; i++) {
+            console.log(i)
+            updateBarsInner(bot_ids[i], bot_ips[i]);
+        }
+        setTimeout(updateBars(), 5000);
+      }
+
       updateBars();
       </script>
 

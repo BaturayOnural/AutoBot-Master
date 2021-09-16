@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask import request
 from flask_cors import CORS
-from random import randrange
+import random
 import requests
 import os
 
@@ -78,8 +78,10 @@ class Task(db.Model):
     attempts = db.Column(db.String(30))
     type = db.Column(db.String(30))
     bots = db.Column(db.String(30))
+    success = db.Column(db.String(30))
+    bots_array = []
 
-    def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots):
+    def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots, success):
             self.instaId = instaId
             self.targetInstaId = targetInstaId
             self.status = status
@@ -87,26 +89,8 @@ class Task(db.Model):
             self.attempts = attempts
             self.type = type
             self.bots = bots
-
-# Task Model
-class Instagram(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    instaId = db.Column(db.String(30))
-    targetInstaId = db.Column(db.String(30))
-    status = db.Column(db.String(30))
-    target = db.Column(db.String(30))
-    attempts = db.Column(db.String(30))
-    type = db.Column(db.String(30))
-    bots = db.Column(db.String(30))
-
-    def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots):
-            self.instaId = instaId
-            self.targetInstaId = targetInstaId
-            self.status = status
-            self.target = target
-            self.attempts = attempts
-            self.type = type
-            self.bots = bots
+            self.success = success
+            self.bots_array = []
 
 # Email Schema
 class EmailSchema(ma.Schema):
@@ -126,7 +110,7 @@ class BotSchema(ma.Schema):
 # Task Schema
 class TaskSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'instaId', 'targetInstaId', 'status', 'target', 'attempts', 'type', 'bots')
+        fields = ('id', 'instaId', 'targetInstaId', 'status', 'target', 'attempts', 'type', 'bots', 'success')
 
 # Init Schema
 email_schema = EmailSchema()
@@ -160,11 +144,23 @@ def login_background():
 # Casual routes for pages
 @app.route('/overview')
 def overview():
-    return render_template("overview.html")
+    bots_query = Bot.query.all()
+    tasks = Task.query.all()
+    for task in tasks:
+        task.bots_array = task.bots.split(",")
+    bots_occupied = Bot.query.filter_by(status="Occupied").all()
+    bot_ids = []
+    bot_ips = []
+    for bot in bots_occupied:
+        bot_ids.append(bot.id)
+        bot_ips.append(bot.digital_ocean_ip)
+    return render_template("overview.html", bots_occupied=bots_occupied, num_bots=len(bots_query), tasks=tasks, bot_ids=bot_ids, bot_ips=bot_ips)
 
 @app.route('/create_task')
 def create_task():
-    return render_template("create_task.html")
+    bots_available = Bot.query.filter_by(status="Idle").all()
+    print(bots_available)
+    return render_template("create_task.html", bots_available=len(bots_available))
 
 @app.route('/task_reports')
 def task_reports():
@@ -260,17 +256,34 @@ def add_task():
         task_type=request.form['task_type']
         type=task_type
         bots=""
-        print(account_amount)
-        print(bot_amount)
-        print(task_type)
+        success="0"
 
         # assign bots to the task
-        pass
+        bots_available = Bot.query.filter_by(status="Idle").all()
+        bots_selected = random.sample(bots_available, k=int(bot_amount))
 
-        new_task = Task(instaId, targetInstaId, status, target, attempts, type, bots)
+        for elem in bots_selected:
+            bots = bots + str(elem.id)
+            bots = bots + ","
 
-        #db.session.add(new_task)
-        #db.session.commit()
+        bots = bots[:-1]
+        new_task = Task(instaId, targetInstaId, status, target, attempts, type, bots, success)
+        bots_split = bots.split(",")
+
+        if task_type == "0":
+            pass
+        elif task_type == "1": # email
+            for bot in bots_split:
+                bot_to_change = Bot.query.get(int(bot))
+                bot_to_change.status = "Occupied"
+                db.session.add(bot_to_change)
+                db.session.commit()
+            db.session.add(new_task)
+            db.session.commit()
+        elif task_type == "2": # insta register
+            pass
+        elif task_type == "3": # task(comments etc)
+            pass
 
         return overview()
 
