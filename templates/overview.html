@@ -321,16 +321,21 @@
       function updateBars(){
 
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                callback(xmlHttp.responseText);
-        }
-        xmlHttp.open("GET", "http://64.225.2.13:5000/get_status", true); // true for asynchronous
-        xmlHttp.send(null);
+        xmlHttp.open( "GET", "http://64.225.2.13:5000/get_status", false ); // false for synchronous request
+        xmlHttp.send( null );
 
         status = xmlHttp.responseText
-        if(status == "1"){
+        if(status == "0"){
+          $('#bot2').progress({percent: 0});
+        }
+        else if(status == "1"){
           $('#bot2').progress({percent: 22});
+        }
+        else if(status == "2"){
+          $('#bot2').progress({percent: 66});
+        }
+        else if(status == "3"){
+          $('#bot2').progress({percent: 100});
         }
 
 

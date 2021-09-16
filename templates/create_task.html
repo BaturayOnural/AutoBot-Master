@@ -21,6 +21,7 @@
     class="sixteen wide mobile fourteen wide tablet fourteen wide computer right floated column"
     id="content"
   >
+  <form  method="POST" class="ui form">
     <div class="ui center aligned padded grid">
       <div class="row">
         <h1 class="ui huge dividing header">Create a Task</h1><br> <br>
@@ -28,15 +29,15 @@
       <div class="ui center aligned large form">
        <div class="huge field">
         <label>Type of Task</label>
-        <select class="ui search dropdown"><br>
-          <option value="">Select Task</option><br>
-          <option value="AF">Email Registration</option>
-          <option value="AX">Instagram Registration</option>
-          <option value="AL">Task(comment etc.)</option>
+        <select id="task_type" class="ui search dropdown"><br>
+          <option value="0">Select Task</option><br>
+          <option value="1">Email Registration</option>
+          <option value="2">Instagram Registration</option>
+          <option value="3">Task(comment etc.)</option>
         </select>
        </div>
       </div>
-
+      <input id="type_of_task" type="hidden" name="task_type" value="Temp"><br>
 
       <div class="row">
 
@@ -46,7 +47,7 @@
 
               <p>Account Amount</p>  <br>
               <div class="ui input">
-                <input type="text" placeholder="Please enter a number"><br>
+                <input type="text" placeholder="Please enter a number" name="account_amount"><br>
               </div><br><br>
 
               <p>Bot Amount</p>  <br>
@@ -57,6 +58,7 @@
                   <div class="thumb" style="left: calc(40% - 10.5px); right: auto;"></div>
                 </div>
               </div>
+                <input id="bot_amount" type="hidden" name="bot_amount" value="Temp"><br>
 
             </div>
           </div><br>
@@ -64,9 +66,9 @@
           <div class="ui center aligned grid">
 
 
-                <div class="ui button">
+                <button onclick="getTaskType();" formaction="/add_task" class="ui button" type="Submit">
                   Focusable
-                </div>
+                </button>
 
           </div>
 
@@ -76,6 +78,7 @@
 
 
     </div>
+    </form>
   </div>
 </div>
 
@@ -92,5 +95,20 @@
 
 
 </script>
+
+<script>
+  function getTaskType(){
+    var dropdown = document.getElementById("task_type");
+    var task_type = dropdown.value;
+    document.getElementById("type_of_task").value = task_type;
+    var bot_amount = $('.ui.slider').slider('get value');
+    document.getElementById("bot_amount").value = bot_amount;
+
+
+  }
+
+</script>
+
+
 
 {% endblock %}

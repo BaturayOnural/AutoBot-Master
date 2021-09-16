@@ -247,6 +247,33 @@ def delete_bot():
 
         return bot_settings()
 
+@app.route('/add_task', methods=['POST'])
+def add_task():
+        instaId=""
+        targetInstaId=""
+        status="Started"
+        account_amount=request.form['account_amount']
+        target=account_amount
+        attempts="0"
+        bot_amount=request.form['bot_amount']
+        text=""
+        task_type=request.form['task_type']
+        type=task_type
+        bots=""
+        print(account_amount)
+        print(bot_amount)
+        print(task_type)
+
+        # assign bots to the task
+        pass
+
+        new_task = Task(instaId, targetInstaId, status, target, attempts, type, bots)
+
+        #db.session.add(new_task)
+        #db.session.commit()
+
+        return overview()
+
 # Run server from terminal
 if __name__ ==  "__main__":
     app.run(debug=True)
