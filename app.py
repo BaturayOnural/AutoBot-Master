@@ -10,6 +10,20 @@ import os
 # Api keys
 webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
 
+## construct ip list
+# globals
+#IP = ""
+#PORT = ""
+#PROXY = IP + ":" + PORT
+#status = "0"
+
+#response = requests.get("https://proxy.webshare.io/api/proxy/list/", headers={"Authorization": webshare_api_key})
+#response = response.json()
+
+#for elem in response.get("results"):
+#    IP = elem.get("proxy_address")
+#    PROXY = elem.get("ports").get("http")
+
 # Init app
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -40,14 +54,21 @@ class Email(db.Model):
 # Name Model
 class Name(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(30), unique=True)
-    last_name = db.Column(db.String(30), unique=True)
+    name = db.Column(db.String(30), unique=True)
     gender = db.Column(db.String(10))
 
-    def __init__(self, first_name, last_name, gender):
-            self.first_name = first_name
-            self.last_name = last_name
+    def __init__(self, name, gender):
+            self.name = name
             self.gender = gender
+
+# Name Model
+class Surname(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    surnaname = db.Column(db.String(30), unique=True)
+
+    def __init__(self, surnamename):
+            self.surname = name
+
 
 # Bot Model
 class Bot(db.Model):
@@ -100,7 +121,12 @@ class EmailSchema(ma.Schema):
 # Name Schema
 class NameSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'first_name', 'last_name', 'gender')
+        fields = ('id', 'name', 'gender')
+
+# Surname Schema
+class SurnameSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'surname')
 
 # Bot Schema
 class BotSchema(ma.Schema):
@@ -118,6 +144,9 @@ emails_schema = EmailSchema(many=True)
 
 name_schema = NameSchema()
 names_schema = NameSchema(many=True)
+
+surname_schema = SurnameSchema()
+surnames_schema = SurnameSchema(many=True)
 
 bot_schema = BotSchema()
 bots_schema = BotSchema(many=True)
@@ -280,6 +309,7 @@ def add_task():
                 db.session.commit()
             db.session.add(new_task)
             db.session.commit()
+
         elif task_type == "2": # insta register
             pass
         elif task_type == "3": # task(comments etc)
