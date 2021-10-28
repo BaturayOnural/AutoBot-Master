@@ -54,7 +54,7 @@ class Email(db.Model):
 # Name Model
 class Name(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), unique=True)
+    name = db.Column(db.String(30))
     gender = db.Column(db.String(10))
 
     def __init__(self, name, gender):
@@ -64,10 +64,10 @@ class Name(db.Model):
 # Name Model
 class Surname(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    surnaname = db.Column(db.String(30), unique=True)
+    surname = db.Column(db.String(30))
 
-    def __init__(self, surnamename):
-            self.surname = name
+    def __init__(self, surname):
+            self.surname = surname
 
 
 # Bot Model
