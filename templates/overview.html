@@ -342,10 +342,10 @@
             console.log(i)
             updateBarsInner(bot_ids[i], bot_ips[i]);
         }
-        setTimeout(updateBars(), 5000);
+
       }
 
-      updateBars();
+      setInterval(updateBars, 5000);
       </script>
 
 <!--HIDDEN DIV AND CLICK HANDLES FOR JS END-->

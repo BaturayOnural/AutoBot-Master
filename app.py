@@ -47,9 +47,9 @@ class Email(db.Model):
     day_age = db.Column(db.Integer, default=0)
 
     def __init__(self, email_address, password, day_age):
-            self.email_address = email_address
-            self.password = password
-            self.day_age = day_age
+        self.email_address = email_address
+        self.password = password
+        self.day_age = day_age
 
 # Name Model
 class Name(db.Model):
@@ -58,8 +58,8 @@ class Name(db.Model):
     gender = db.Column(db.String(10))
 
     def __init__(self, name, gender):
-            self.name = name
-            self.gender = gender
+        self.name = name
+        self.gender = gender
 
 # Name Model
 class Surname(db.Model):
@@ -67,7 +67,7 @@ class Surname(db.Model):
     surname = db.Column(db.String(30))
 
     def __init__(self, surname):
-            self.surname = surname
+        self.surname = surname
 
 
 # Bot Model
@@ -82,12 +82,12 @@ class Bot(db.Model):
     status = db.Column(db.String(10))
 
     def __init__(self, username, password, port, proxy_ip, digital_ocean_ip, status):
-            self.username = username
-            self.pasword = password
-            self.port = port
-            self.proxy_ip = proxy_ip
-            self.digital_ocean_ip = digital_ocean_ip
-            self.status = status
+        self.username = username
+        self.pasword = password
+        self.port = port
+        self.proxy_ip = proxy_ip
+        self.digital_ocean_ip = digital_ocean_ip
+        self.status = status
 
 # Task Model
 class Task(db.Model):
@@ -247,75 +247,86 @@ def bot_settings():
 # Routes for db model creation/update/delete
 @app.route('/add_bot', methods=['POST'])
 def add_bot():
-        username = ""
-        password = ""
-        port = ""
-        proxy_ip = ""
-        digital_ocean_ip = request.form['digital_ocean_ip']
-        status = "Idle"
+    username = ""
+    password = ""
+    port = ""
+    proxy_ip = ""
+    digital_ocean_ip = request.form['digital_ocean_ip']
+    status = "Idle"
 
-        new_bot = Bot(username, password, port, proxy_ip, digital_ocean_ip, status)
+    new_bot = Bot(username, password, port, proxy_ip, digital_ocean_ip, status)
 
-        db.session.add(new_bot)
-        db.session.commit()
+    db.session.add(new_bot)
+    db.session.commit()
 
-        return bot_settings()
+    return bot_settings()
 
 @app.route('/delete_bot', methods=['POST'])
 def delete_bot():
-        bot_name = request.form['bot_name']
-        bot_id = bot_name.split("-")[1]
-        bot_to_delete = Bot.query.get(int(bot_id))
+    bot_name = request.form['bot_name']
+    bot_id = bot_name.split("-")[1]
+    bot_to_delete = Bot.query.get(int(bot_id))
 
-        db.session.delete(bot_to_delete)
-        db.session.commit()
+    db.session.delete(bot_to_delete)
+    db.session.commit()
 
-        return bot_settings()
+    return bot_settings()
 
 @app.route('/add_task', methods=['POST'])
 def add_task():
-        instaId=""
-        targetInstaId=""
-        status="Started"
-        account_amount=request.form['account_amount']
-        target=account_amount
-        attempts="0"
-        bot_amount=request.form['bot_amount']
-        text=""
-        task_type=request.form['task_type']
-        type=task_type
-        bots=""
-        success="0"
+    instaId=""
+    targetInstaId=""
+    status="Started"
+    account_amount=request.form['account_amount']
+    target=account_amount
+    attempts="0"
+    bot_amount=request.form['bot_amount']
+    text=""
+    task_type=request.form['task_type']
+    type=task_type
+    bots=""
+    success="0"
 
-        # assign bots to the task
-        bots_available = Bot.query.filter_by(status="Idle").all()
-        bots_selected = random.sample(bots_available, k=int(bot_amount))
+    # assign bots to the task
+    bots_available = Bot.query.filter_by(status="Idle").all()
+    bots_selected = random.sample(bots_available, k=int(bot_amount))
 
-        for elem in bots_selected:
-            bots = bots + str(elem.id)
-            bots = bots + ","
+    for elem in bots_selected:
+        bots = bots + str(elem.id)
+        bots = bots + ","
 
-        bots = bots[:-1]
-        new_task = Task(instaId, targetInstaId, status, target, attempts, type, bots, success)
-        bots_split = bots.split(",")
+    bots = bots[:-1]
+    new_task = Task(instaId, targetInstaId, status, target, attempts, type, bots, success)
+    bots_split = bots.split(",")
 
-        if task_type == "0":
-            pass
-        elif task_type == "1": # email
-            for bot in bots_split:
-                bot_to_change = Bot.query.get(int(bot))
-                bot_to_change.status = "Occupied"
-                db.session.add(bot_to_change)
-                db.session.commit()
-            db.session.add(new_task)
+    if task_type == "0":
+        pass
+    elif task_type == "1": # email
+        for bot in bots_split:
+            bot_to_change = Bot.query.get(int(bot))
+            bot_to_change.status = "Occupied"
+            db.session.add(bot_to_change)
             db.session.commit()
+        db.session.add(new_task)
+        db.session.commit()
 
-        elif task_type == "2": # insta register
-            pass
-        elif task_type == "3": # task(comments etc)
-            pass
+    elif task_type == "2": # insta register
+        pass
+    elif task_type == "3": # task(comments etc)
+        pass
 
-        return overview()
+    return overview()
+
+@app.route('/add_email/<username>/<password>/<task>')
+def add_email(username, password, task):
+    task = Task.query.get(int(task))
+    task.success = str(int(task.success) + 1)
+    username = username + "@yandex.com"
+    new_email = Email(username, password, 0)
+    db.session.add(new_email)
+    db.session.add(task)
+    db.session.commit()
+    return overview()
 
 # Run server from terminal
 if __name__ ==  "__main__":
