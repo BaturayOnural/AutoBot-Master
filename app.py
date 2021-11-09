@@ -70,6 +70,7 @@ class Task(db.Model):
     type = db.Column(db.String(30))
     bots = db.Column(db.String(30))
     success = db.Column(db.String(30))
+    bots_array = []
 
 
     def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots, success):
@@ -81,6 +82,7 @@ class Task(db.Model):
             self.type = type
             self.bots = bots
             self.success = success
+            self.bots_array = bots.split(",")
 
 # Additional routes for favicon, profile picture, login background
 @app.route('/templates/static/favicon.ico')
@@ -106,6 +108,8 @@ def overview():
     bots_occupied = Bot.query.filter_by(status="Occupied").all()
     bot_ids = []
     bot_ips = []
+    for task in tasks:
+        task.bots_array = task.bots.split(",")
     for bot in bots_occupied:
         bot_ids.append(bot.id)
         bot_ips.append(bot.digital_ocean_ip)

@@ -4,6 +4,8 @@ from app import db
 from app import Task, Bot, Name, Surname
 import urllib.request
 import random
+import time
+import os
 
 # Api keys + proxy matching
 webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
@@ -31,7 +33,7 @@ def fire_event(bot, task):
     bot = Bot.query.get(bot)
     bot_ip = bot.digital_ocean_ip
     bot_proxy = proxies[int(bot.id) - 1]
-    url = 'http://' + bot_ip + '/email' + '/' +  bot_proxy + '/' + task.id + '/' + get_random_name(random.choice(['E','K'])) + '/' + get_random_surname()
+    url = 'http://' + bot_ip + '/email' + '/' +  bot_proxy + '/' + str(task.id) + '/' + get_random_name(random.choice(['E','K'])) + '/' + get_random_surname()
     resp = requests.get(url)
 
 def kill_email(bot):
@@ -50,15 +52,15 @@ for task in tasks:
             bots = task.bots.split(",")
             for bot in bots:
                 kill_email(bot)
-            #time.sleep(3)
+            time.sleep(3)
             for bot in bots:
-                fire_event(bot)
+                fire_event(bot, task)
         else:
             task.attempts = str(int(task.attempts) + (task.target - task.success))
             bots = task.bots.split(",")
             bots = random.sample(bots, (int(task.target) - int(task.success)))
             for bot in bots:
-                kill_email(bot, task)
-            #time.sleep(3)
+                kill_email(bot)
+            time.sleep(3)
             for bot in bots:
                 fire_event(bot, task)

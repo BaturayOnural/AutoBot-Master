@@ -313,11 +313,11 @@
       var bot_amount = bot_ids.length;
 
       function updateBarsInner(bot_id, bot_ip){
-
         var xmlHttp = new XMLHttpRequest();
+        var pre_url = "htpp://";
         var ip = bot_ip;
-        var url = "/get_status"
-        xmlHttp.open( "GET", ip+":5000"+url, false ); // false for synchronous request
+        var url = "/get_status";
+        xmlHttp.open( "GET", ("http://"+ip+url), false ); // false for synchronous request
         xmlHttp.send( null );
         status = xmlHttp.responseText
 
