@@ -6,6 +6,9 @@ import random
 import requests
 import os
 
+# Api keys 
+webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
+
 # Init app
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
