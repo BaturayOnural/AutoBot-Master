@@ -151,27 +151,6 @@ def bot_settings():
     response = response.json()
     proxy_count = response['proxy_count']
 
-    # use when creating task for proxy information
-    response_refresh = requests.get("https://proxy.webshare.io/api/proxy/replacement/info/", headers={"Authorization": webshare_api_key})
-    response_refresh = response_refresh.json()
-    print(response_refresh['automatic_refresh_next_at'])
-    response = requests.get("https://proxy.webshare.io/api/proxy/list/", headers={"Authorization": webshare_api_key})
-    response = response.json()
-    usernames = []
-    passwords = []
-    proxy_addresses = []
-    ports = []
-    for elem in response['results']:
-        username = elem['username']
-        password = elem['password']
-        proxy_address = elem['proxy_address']
-        port = elem['ports']['http']
-
-        usernames.append(username)
-        passwords.append(password)
-        proxy_addresses.append(proxy_address)
-        ports.append(port)
-
     return render_template("bot_settings.html", bots=bots, num_bots=len(bots), proxy_count=proxy_count)
 
 # Routes for db model creation/update/delete

@@ -56,7 +56,7 @@ for task in tasks:
             for bot in bots:
                 fire_event(bot, task)
         else:
-            task.attempts = str(int(task.attempts) + (task.target - task.success))
+            task.attempts = str(int(task.attempts) + (int(task.target) - int(task.success)))
             bots = task.bots.split(",")
             bots = random.sample(bots, (int(task.target) - int(task.success)))
             for bot in bots:
@@ -64,3 +64,5 @@ for task in tasks:
             time.sleep(3)
             for bot in bots:
                 fire_event(bot, task)
+        db.session.add(task)
+        db.session.commit()
