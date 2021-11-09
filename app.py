@@ -1,28 +1,10 @@
 from flask import Flask, render_template, send_from_directory, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
 from flask import request
 from flask_cors import CORS
 import random
 import requests
 import os
-
-# Api keys
-webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
-
-## construct ip list
-# globals
-#IP = ""
-#PORT = ""
-#PROXY = IP + ":" + PORT
-#status = "0"
-
-#response = requests.get("https://proxy.webshare.io/api/proxy/list/", headers={"Authorization": webshare_api_key})
-#response = response.json()
-
-#for elem in response.get("results"):
-#    IP = elem.get("proxy_address")
-#    PROXY = elem.get("ports").get("http")
 
 # Init app
 app = Flask(__name__)
@@ -35,9 +17,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Init Database
 db = SQLAlchemy(app)
-
-# Init Marshmallow
-ma = Marshmallow(app)
 
 # Email Model
 class Email(db.Model):
@@ -73,19 +52,10 @@ class Surname(db.Model):
 # Bot Model
 class Bot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    number = db.Column(db.String(5))
-    username = db.Column(db.String(30))
-    password = db.Column(db.String(30))
-    port = db.Column(db.String(10))
-    proxy_ip = db.Column(db.String(30))
     digital_ocean_ip = db.Column(db.String(30))
     status = db.Column(db.String(10))
 
-    def __init__(self, username, password, port, proxy_ip, digital_ocean_ip, status):
-        self.username = username
-        self.pasword = password
-        self.port = port
-        self.proxy_ip = proxy_ip
+    def __init__(self, digital_ocean_ip, status):
         self.digital_ocean_ip = digital_ocean_ip
         self.status = status
 
@@ -100,7 +70,7 @@ class Task(db.Model):
     type = db.Column(db.String(30))
     bots = db.Column(db.String(30))
     success = db.Column(db.String(30))
-    bots_array = []
+
 
     def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots, success):
             self.instaId = instaId
@@ -111,48 +81,6 @@ class Task(db.Model):
             self.type = type
             self.bots = bots
             self.success = success
-            self.bots_array = []
-
-# Email Schema
-class EmailSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'email_address', 'password', 'day_age')
-
-# Name Schema
-class NameSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'name', 'gender')
-
-# Surname Schema
-class SurnameSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'surname')
-
-# Bot Schema
-class BotSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'username', 'password', 'port', 'proxy_ip', 'digital_ocean_ip', 'status')
-
-# Task Schema
-class TaskSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'instaId', 'targetInstaId', 'status', 'target', 'attempts', 'type', 'bots', 'success')
-
-# Init Schema
-email_schema = EmailSchema()
-emails_schema = EmailSchema(many=True)
-
-name_schema = NameSchema()
-names_schema = NameSchema(many=True)
-
-surname_schema = SurnameSchema()
-surnames_schema = SurnameSchema(many=True)
-
-bot_schema = BotSchema()
-bots_schema = BotSchema(many=True)
-
-task_schema = TaskSchema()
-tasks_schema = TaskSchema(many=True)
 
 # Additional routes for favicon, profile picture, login background
 @app.route('/templates/static/favicon.ico')
@@ -175,8 +103,6 @@ def login_background():
 def overview():
     bots_query = Bot.query.all()
     tasks = Task.query.all()
-    for task in tasks:
-        task.bots_array = task.bots.split(",")
     bots_occupied = Bot.query.filter_by(status="Occupied").all()
     bot_ids = []
     bot_ips = []
@@ -247,14 +173,10 @@ def bot_settings():
 # Routes for db model creation/update/delete
 @app.route('/add_bot', methods=['POST'])
 def add_bot():
-    username = ""
-    password = ""
-    port = ""
-    proxy_ip = ""
-    digital_ocean_ip = request.form['digital_ocean_ip']
+    digital_ocean_ip = request.form['digital_ocean_ip'] + ':5000'
     status = "Idle"
 
-    new_bot = Bot(username, password, port, proxy_ip, digital_ocean_ip, status)
+    new_bot = Bot(digital_ocean_ip, status)
 
     db.session.add(new_bot)
     db.session.commit()
