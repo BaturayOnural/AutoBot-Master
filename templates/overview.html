@@ -311,41 +311,51 @@
       var bot_ids = {{ bot_ids }}
       var bot_ips = {{ bot_ips|tojson }}
       var bot_amount = bot_ids.length;
+      var status = "0"
 
       function updateBarsInner(bot_id, bot_ip){
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
 
-       var ip = bot_ip;
-       var xmlHttp = new XMLHttpRequest();
-       var url = "/get_status";
-       xmlHttp.open( "GET", ("http://" + ip + url), true ); // false for synchronous request
-       xmlHttp.send( null );
-       status = xmlHttp.responseText
+        xhr.addEventListener("readystatechange", function() {
+          if(this.readyState === 4) {
+            status = this.responseText.trim()
+          }
+        });
 
-        var bot_name = "bot"
-        bot_name += bot_id
+        xhr.open("GET", "http://"+bot_ip+"/get_status");
+
+        xhr.send();
+
+
+       var bot_name = "#bot"
+        bot_name = bot_name.concat(String(bot_id))
         if(status == "0"){
+          console.log(0)
           $(bot_name).progress({percent: 0});
         }
         else if(status == "1"){
+          console.log(1)
           $(bot_name).progress({percent: 22});
         }
         else if(status == "2"){
+          console.log(2)
           $(bot_name).progress({percent: 66});
         }
         else if(status == "3"){
+          console.log(3)
           $(bot_name).progress({percent: 100});
         }
 
       }
       function updateBars(){
         for (var i = 0; i < bot_amount; i++) {
-            console.log(i)
             updateBarsInner(bot_ids[i], bot_ips[i]);
         }
 
       }
 
-      setInterval(updateBars, 5000);
+      setInterval(updateBars, 3000);
       </script>
 
 <!--HIDDEN DIV AND CLICK HANDLES FOR JS END-->
