@@ -46,31 +46,30 @@ def kill_email(bot):
 
 tasks = Task.query.filter_by(status="Started").all()
 for task in tasks:
-    if (task.status == "Started"):
-        if ((int(task.target) - int(task.success)) >= len(task.bots.split(","))):
-            task.attempts = str(int(task.attempts) + len(task.bots.split(",")))
-            bots = task.bots.split(",")
-            for bot in bots:
-                kill_email(bot)
-            time.sleep(3)
-            for bot in bots:
-                fire_event(bot, task)
-        elif((int(task.target) - int(task.success)) > 0):
-            task.attempts = str(int(task.attempts) + (int(task.target) - int(task.success)))
-            bots = task.bots.split(",")
-            bots = random.sample(bots, (int(task.target) - int(task.success)))
-            for bot in bots:
-                kill_email(bot)
-            time.sleep(3)
-            for bot in bots:
-                fire_event(bot, task)
-        else:
-            task.status = "Completed"
-            bots = task.bots.split(",")
-            for bot in bots:
-                bot = Bot.query.get(bot)
-                bot.status = "Idle"
-                db.session.add(bot)
-                db.session.commit()
-        db.session.add(task)
-        db.session.commit()
+    if ((int(task.target) - int(task.success)) >= len(task.bots.split(","))):
+        task.attempts = str(int(task.attempts) + len(task.bots.split(",")))
+        bots = task.bots.split(",")
+        for bot in bots:
+            kill_email(bot)
+        time.sleep(3)
+        for bot in bots:
+            fire_event(bot, task)
+    elif((int(task.target) - int(task.success)) > 0):
+        task.attempts = str(int(task.attempts) + (int(task.target) - int(task.success)))
+        bots = task.bots.split(",")
+        bots = random.sample(bots, (int(task.target) - int(task.success)))
+        for bot in bots:
+            kill_email(bot)
+        time.sleep(3)
+        for bot in bots:
+            fire_event(bot, task)
+    else:
+        task.status = "Completed"
+        bots = task.bots.split(",")
+        for bot in bots:
+            bot = Bot.query.get(bot)
+            bot.status = "Idle"
+            db.session.add(bot)
+            db.session.commit()
+    db.session.add(task)
+    db.session.commit()

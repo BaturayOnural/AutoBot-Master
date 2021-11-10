@@ -179,6 +179,22 @@ def delete_bot():
     bot_name = request.form['bot_name']
     bot_id = bot_name.split("-")[1]
     bot_to_delete = Bot.query.get(int(bot_id))
+    tasks = Task.query.filter_by(status="Started").all()
+    for task in tasks:
+        bots_list = task.bots.split(",")
+        for bot in bots_list:
+            if (str(bot_id) == bot):
+                bots_list.remove(str(bot_id))
+                if (len(bots_list) == 0):
+                    db.session.delete(task)
+                bots = ""
+                for elem in bots_list:
+                    bots = bots + elem
+                    bots = bots + ","
+                bots = bots[:-1]
+                task.bots = bots
+                db.session.add(task)
+                break
 
     db.session.delete(bot_to_delete)
     db.session.commit()
