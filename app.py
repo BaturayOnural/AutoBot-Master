@@ -107,6 +107,9 @@ def login_background():
 @app.route('/overview')
 def overview():
     bots_query = Bot.query.all()
+    emails_query = Email.query.all()
+    tasks_query = Task.query.filter_by(status="Completed").all()
+    #instagrams_query = Instagram.query.all()
     tasks = Task.query.filter_by(status="Started").all()
     bots_occupied = Bot.query.filter_by(status="Occupied").all()
     bot_ids = []
@@ -116,12 +119,11 @@ def overview():
     for bot in bots_occupied:
         bot_ids.append(bot.id)
         bot_ips.append(bot.digital_ocean_ip)
-    return render_template("overview.html", bots_occupied=bots_occupied, num_bots=len(bots_query), tasks=tasks, bot_ids=bot_ids, bot_ips=bot_ips)
+    return render_template("overview.html", bots_occupied=bots_occupied, num_bots=len(bots_query), tasks=tasks, bot_ids=bot_ids, bot_ips=bot_ips, num_emails = len(emails_query), num_tasks=len(tasks_query))
 
 @app.route('/create_task')
 def create_task():
     bots_available = Bot.query.filter_by(status="Idle").all()
-    print(bots_available)
     return render_template("create_task.html", bots_available=len(bots_available))
 
 @app.route('/task_reports')
