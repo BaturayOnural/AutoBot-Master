@@ -68,6 +68,7 @@ for task in tasks:
             task.status = "Completed"
             bots = task.bots.split(",")
             for bot in bots:
+                bot = Bot.query.get(bot)
                 bot.status = "Idle"
                 db.session.add(bot)
                 db.session.commit()
