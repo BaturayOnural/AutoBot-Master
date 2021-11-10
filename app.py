@@ -1,7 +1,7 @@
 from flask import Flask, render_template, send_from_directory, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import random
 import requests
 import os
@@ -242,6 +242,7 @@ def add_email(username, password, task):
     return "Email added to db!"
 
 @app.route('/get_task_info/<task_id>')
+@cross_origin(origin='*')
 def get_task_info(task_id):
     task = Task.query.get(int(task_id))
     task_values = {
