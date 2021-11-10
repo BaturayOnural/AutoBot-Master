@@ -187,6 +187,8 @@ def delete_bot():
                 bots_list.remove(str(bot_id))
                 if (len(bots_list) == 0):
                     db.session.delete(task)
+                    db.session.commit()
+                    break
                 bots = ""
                 for elem in bots_list:
                     bots = bots + elem
