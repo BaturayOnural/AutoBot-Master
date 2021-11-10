@@ -311,11 +311,12 @@
       var bot_ids = {{ bot_ids }}
       var bot_ips = {{ bot_ips|tojson }}
       var bot_amount = bot_ids.length;
-      var status = "0"
+
 
       function updateBarsInner(bot_id, bot_ip){
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = false;
+        var status = "0";
 
         xhr.addEventListener("readystatechange", function() {
           if(this.readyState === 4) {
