@@ -184,7 +184,7 @@ def delete_bot():
         bots_list = task.bots.split(",")
         for bot in bots_list:
             if (str(bot_id) == bot):
-                bots_list.remove(str(bot_id))
+                bots_list = bots_list.remove(str(bot_id))
                 if (len(bots_list) == 0):
                     task.status = "Terminated"
                     db.session.add(task)
@@ -196,7 +196,12 @@ def delete_bot():
                 bots = bots[:-1]
                 task.bots = bots
                 db.session.add(task)
+                db.session.commit()
                 break
+    for task in tasks:
+        if (len(task.bots) == 0):
+            db.session.delete(task)
+            db.session.commit()
 
     db.session.delete(bot_to_delete)
     db.session.commit()
