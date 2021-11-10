@@ -6,7 +6,7 @@ import random
 import requests
 import os
 
-# Api keys 
+# Api keys
 webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
 
 # Init app
@@ -107,7 +107,7 @@ def login_background():
 @app.route('/overview')
 def overview():
     bots_query = Bot.query.all()
-    tasks = Task.query.all()
+    tasks = Task.query.filter_by(status="Started").all()
     bots_occupied = Bot.query.filter_by(status="Occupied").all()
     bot_ids = []
     bot_ips = []
