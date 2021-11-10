@@ -119,7 +119,7 @@ def overview():
     for bot in bots_occupied:
         bot_ids.append(bot.id)
         bot_ips.append(bot.digital_ocean_ip)
-    return render_template("overview.html", bots_occupied=bots_occupied, num_bots=len(bots_query), tasks=tasks, bot_ids=bot_ids, bot_ips=bot_ips, num_emails = len(emails_query), num_tasks=len(tasks_query))
+    return render_template("overview.html", bots_occupied=bots_occupied, num_bots=len(bots_query), tasks=tasks, bot_ids=bot_ids, bot_ips=bot_ips, num_emails=len(emails_query), num_tasks=len(tasks_query))
 
 @app.route('/create_task')
 def create_task():
@@ -236,7 +236,7 @@ def add_email(username, password, task):
     db.session.add(new_email)
     db.session.add(task)
     db.session.commit()
-    return overview()
+    return "Email added to db!"
 
 # Run server from terminal
 if __name__ ==  "__main__":
