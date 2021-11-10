@@ -5,6 +5,7 @@ from flask_cors import CORS
 import random
 import requests
 import os
+import json
 
 # Api keys
 webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
@@ -112,14 +113,16 @@ def overview():
     #instagrams_query = Instagram.query.all()
     tasks = Task.query.filter_by(status="Started").all()
     bots_occupied = Bot.query.filter_by(status="Occupied").all()
+    task_ids = []
     bot_ids = []
     bot_ips = []
     for task in tasks:
         task.bots_array = task.bots.split(",")
+        task_ids.append(task.id)
     for bot in bots_occupied:
         bot_ids.append(bot.id)
         bot_ips.append(bot.digital_ocean_ip)
-    return render_template("overview.html", bots_occupied=bots_occupied, num_bots=len(bots_query), tasks=tasks, bot_ids=bot_ids, bot_ips=bot_ips, num_emails=len(emails_query), num_tasks=len(tasks_query))
+    return render_template("overview.html", bots_occupied=bots_occupied, num_bots=len(bots_query), tasks=tasks, bot_ids=bot_ids, bot_ips=bot_ips, num_emails=len(emails_query), num_tasks=len(tasks_query), task_ids=task_ids)
 
 @app.route('/create_task')
 def create_task():
@@ -237,6 +240,15 @@ def add_email(username, password, task):
     db.session.add(task)
     db.session.commit()
     return "Email added to db!"
+
+@app.route('/get_task_info/<task_id>')
+def get_task_info(task_id):
+    task = Task.query.get(int(task_id))
+    task_values = {
+        "attempts": task.attempts,
+        "success": task.success
+    }
+    return json.dumps(task_values)
 
 # Run server from terminal
 if __name__ ==  "__main__":
