@@ -19,6 +19,8 @@ for elem in response.get("results"):
     IP = elem.get("proxy_address")
     PORT = str(elem.get("ports").get("http"))
     PROXY = IP + ":" + PORT
+    PROXY = "https://" + PROXY  
+    print(PROXY)
     proxies.append(PROXY)
 
 def get_random_name(gender_proposed):
