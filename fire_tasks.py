@@ -23,13 +23,13 @@ for elem in response.get("results"):
 
 def get_random_name(gender_proposed):
     names = Name.query.filter_by(gender=gender_proposed).all()
-    name = unidecode(random.choice(names))
-    return name.name
+    name = random.choice(names)
+    return str(unidecode(name.name))
 
 def get_random_surname():
     surnames = Surname.query.all()
-    surname = unidecode(random.choice(surnames))
-    return surname.surname
+    surname = random.choice(surnames)
+    return str(unidecode(surname.surname))
 
 def fire_event(bot, task):
     bot = Bot.query.get(bot)
