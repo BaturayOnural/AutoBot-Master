@@ -6,6 +6,7 @@ import urllib.request
 import random
 import time
 import os
+from datetime import datetime
 
 # Api keys + proxy matching
 webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
@@ -65,6 +66,7 @@ for task in tasks:
             fire_event(bot, task)
     else:
         task.status = "Completed"
+        task.finish = datetime.now()
         bots = task.bots.split(",")
         for bot in bots:
             bot = Bot.query.get(bot)

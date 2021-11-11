@@ -6,6 +6,7 @@ import random
 import requests
 import os
 import json
+from datetime import datetime
 
 # Api keys
 webshare_api_key = "3c43d9fc51d65c8cf7fe3bb85d1ecfcade8b41be"
@@ -75,9 +76,11 @@ class Task(db.Model):
     bots = db.Column(db.String(30))
     success = db.Column(db.String(30))
     bots_array = []
+    start = db.Column(db.DateTime())
+    finish = db.Column(db.DateTime(), nullable=True)
 
 
-    def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots, success):
+    def __init__(self, instaId, targetInstaId, status, target, attempts, type, bots, success, start):
             self.instaId = instaId
             self.targetInstaId = targetInstaId
             self.status = status
@@ -87,6 +90,8 @@ class Task(db.Model):
             self.bots = bots
             self.success = success
             self.bots_array = bots.split(",")
+            self.start = start
+            self.finish = None
 
 # Additional routes for favicon, profile picture, login background
 @app.route('/templates/static/favicon.ico')
@@ -222,6 +227,7 @@ def add_task():
     type=task_type
     bots=""
     success="0"
+    start = datetime.now()
 
     # assign bots to the task
     bots_available = Bot.query.filter_by(status="Idle").all()
@@ -232,7 +238,7 @@ def add_task():
         bots = bots + ","
 
     bots = bots[:-1]
-    new_task = Task(instaId, targetInstaId, status, target, attempts, type, bots, success)
+    new_task = Task(instaId, targetInstaId, status, target, attempts, type, bots, success, start)
     bots_split = bots.split(",")
 
     if task_type == "0":
