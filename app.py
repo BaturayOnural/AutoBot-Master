@@ -281,6 +281,15 @@ def get_task_info(task_id):
     }
     return json.dumps(task_values)
 
+@app.route('/get_email_amount')
+@cross_origin(origin='*')
+def get_email_amount():
+    emails = Email.query.all()
+    email_values = {
+        "total": len(emails)
+    }
+    return json.dumps(email_values)
+
 # Run server from terminal
 if __name__ ==  "__main__":
     app.run(host="0.0.0.0", debug=True)

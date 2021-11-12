@@ -148,7 +148,7 @@
               <div class="ui red raised  segment">
               <div class="ui statistic">
 
-                <div class="value">
+                <div id="statistics_email" class="value">
                   {{ num_emails }}
                 </div>
                 <div class="label">
@@ -316,6 +316,7 @@
       var stats = []
       var attempts = []
       var successes = []
+      var email = 0
       var max = 0
       var max2 = 0
       for (let x = 0; x < bot_amount; x++){
@@ -402,6 +403,27 @@
 
       }
 
+      function updateStatisticsInner(){
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+
+
+        xhr.addEventListener("readystatechange", function() {
+          if(this.readyState === 4) {
+            const result = JSON.parse(this.responseText);
+            email = result.total
+          }
+        });
+
+        xhr.open("GET", "http://143.198.30.128:5000/get_email_amount");
+        xhr.send();
+
+
+      var email_id = "statistics_email"
+      document.getElementById(email_id).innerText = String(email)
+
+      }
+
       function updateBars(){
         for (var i = 0; i < bot_amount; i++) {
             updateBarsInner(bot_ids[i], bot_ips[i]);
@@ -414,9 +436,14 @@
         }
 
       }
+      function updateStatistics(){
+        updateStatisticsInner();
+
+      }
 
       setInterval(updateBars, 3000);
       setInterval(updateAttempts, 3000);
+      setInterval(updateStatistics, 15000);
       </script>
 
 <!--HIDDEN DIV AND CLICK HANDLES FOR JS END-->
