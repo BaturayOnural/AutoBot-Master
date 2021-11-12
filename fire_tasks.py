@@ -19,7 +19,7 @@ for elem in response.get("results"):
     IP = elem.get("proxy_address")
     PORT = str(elem.get("ports").get("http"))
     PROXY = IP + ":" + PORT
-    #PROXY = "https:\/\/" + PROXY  
+    #PROXY = "https:\/\/" + PROXY
     print(PROXY)
     proxies.append(PROXY)
 
@@ -45,8 +45,6 @@ def kill_email(bot):
     bot_ip = bot.digital_ocean_ip
     url = 'http://' + bot_ip + '/kill_email'
     resp = requests.get(url)
-
-
 
 tasks = Task.query.filter_by(status="Started").all()
 for task in tasks:
