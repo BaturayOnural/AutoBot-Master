@@ -392,15 +392,16 @@
         xhr.send();
 
 
-      var task_attempt = "task"
-      var task_success = "task"
-      task_attempt = task_attempt.concat(String(task_id))
-      task_success = task_success.concat(String(task_id))
-      task_attempt = task_attempt.concat("a")
-      task_success = task_success.concat("s")
-      document.getElementById(task_attempt).innerHTML = attempts[task_id] + " - Attempts" + " <i class=\"blue sync alternate icon\"></i>"
-      document.getElementById(task_success).innerHTML = successes[task_id] + " - Success" + " <i class=\"green check icon\"></i>"
-
+        var task_attempt = "task"
+        var task_success = "task"
+        task_attempt = task_attempt.concat(String(task_id))
+        task_success = task_success.concat(String(task_id))
+        task_attempt = task_attempt.concat("a")
+        task_success = task_success.concat("s")
+        if(attempts[task_id] != 0){
+          document.getElementById(task_attempt).innerHTML = attempts[task_id] + " - Attempts" + " <i class=\"blue sync alternate icon\"></i>"
+          document.getElementById(task_success).innerHTML = successes[task_id] + " - Success" + " <i class=\"green check icon\"></i>"
+        }
       }
 
       function updateStatisticsInner(){
@@ -420,7 +421,9 @@
 
 
       var email_id = "statistics_email"
-      document.getElementById(email_id).innerText = String(email)
+      if(email != 0){
+        document.getElementById(email_id).innerText = String(email)
+      }
 
       }
 
